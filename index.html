@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sulby Glen Hotel | Isle of Man</title>
+    <meta
+      name="description"
+      content="Sulby Glen Hotel is a family-run countryside hotel and pub on the Isle of Man, offering warm hospitality, hearty meals, and easy access to the TT course."
+    />
+    <meta property="og:title" content="Sulby Glen Hotel | Isle of Man" />
+    <meta
+      property="og:description"
+      content="Experience the charm of the Sulby Glen Hotel, beloved by bikers and travellers for its cozy rooms, local ales, and hearty meals."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sulbyglenhotel.example.com" />
+    <meta
+      property="og:image"
+      content="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="#home">Sulby Glen Hotel</a>
+        <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+          <span class="sr-only">Menu</span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primary-navigation" class="main-nav">
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="rooms/">Rooms</a></li>
+            <li><a href="restaurant/">Restaurant &amp; Bar</a></li>
+            <li><a href="shop/">Shop</a></li>
+            <li><a href="gallery/">Gallery</a></li>
+            <li><a href="tt-races/">TT Races</a></li>
+            <li><a href="news/">News</a></li>
+            <li><a href="reviews/">Reviews</a></li>
+            <li><a href="about/">About</a></li>
+            <li><a href="contact/">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero" style="--hero-image: url('images/SulbyGlenOutside.png');">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+          <h1>Welcome to the Sulby Glen Hotel</h1>
+          <p>
+            Thank you for choosing our family-run inn. We combine heartfelt hospitality with hearty
+            Manx cooking, local ales, and thoughtful touches for every guest.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="rooms/">Explore Rooms</a>
+            <!-- Booking system integration placeholder: update this link to connect a booking engine -->
+            <a
+              class="btn btn-outline"
+              href="https://www.booking.com"
+              target="_blank"
+              rel="noopener"
+            >
+              Book Now
+            </a>
+            <a class="btn btn-secondary" href="restaurant/">View Menu</a>
+          </div>
+        </div>
+        <p class="image-credit">Photo credit: Leonard Stanway (Google Reviews)</p>
+      </section>
+
+      <section class="section intro-links">
+        <div class="container">
+          <h2>Explore Sulby Glen Hotel</h2>
+          <p class="section-lead">
+            Discover our rooms, dining, shop, and gathering spots. Each page dives deeper so you can
+            plan the perfect Isle of Man getaway.
+          </p>
+          <div class="quick-grid">
+            <a class="quick-card" href="rooms/">
+              <h3>Stay With Us</h3>
+              <p>View room types, rates, and amenities across our 11 en-suite bedrooms.</p>
+            </a>
+            <a class="quick-card" href="restaurant/">
+              <h3>Dine &amp; Drink</h3>
+              <p>See menus, bar hours, and seasonal highlights from our pub and kitchen.</p>
+            </a>
+            <a class="quick-card" href="shop/">
+              <h3>Village Shop</h3>
+              <p>Check opening times and browse what's stocked daily in our on-site shop.</p>
+            </a>
+            <a class="quick-card" href="gallery/">
+              <h3>Photo Gallery</h3>
+              <p>Browse TT moments, celebrations, and everyday life around the hotel.</p>
+            </a>
+            <a class="quick-card" href="tt-races/">
+              <h3>TT Hub</h3>
+              <p>Learn why racers love our vantage point and read about Dan Sayle's achievements.</p>
+            </a>
+            <a class="quick-card" href="news/">
+              <h3>Latest News</h3>
+              <p>Catch daily updates and event announcements direct from Facebook.</p>
+            </a>
+            <a class="quick-card" href="reviews/">
+              <h3>Guest Reviews</h3>
+              <p>Hear from riders, travellers, and neighbours who make us their go-to stop.</p>
+            </a>
+            <a class="quick-card" href="about/">
+              <h3>Our Story</h3>
+              <p>Meet Rosie and Dan and discover the family history behind the Sulby Glen.</p>
+            </a>
+            <a class="quick-card" href="contact/">
+              <h3>Contact &amp; Location</h3>
+              <p>Get in touch, see our map, and plan your journey across the island.</p>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p>&copy; <span id="current-year"></span> Sulby Glen Hotel. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="privacy/">Privacy Policy</a>
+          <a href="accessibility/">Accessibility</a>
+          <a href="contact/">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact &amp; Location | Sulby Glen Hotel</title>
+    <meta
+      name="description"
+      content="Contact the Sulby Glen Hotel, find our address, phone number, and send us a message."
+    />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="../#home">Sulby Glen Hotel</a>
+        <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+          <span class="sr-only">Menu</span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <nav id="primary-navigation" class="main-nav">
+          <ul>
+            <li><a href="../">Home</a></li>
+            <li><a href="../rooms/">Rooms</a></li>
+            <li><a href="../restaurant/">Restaurant &amp; Bar</a></li>
+            <li><a href="../shop/">Shop</a></li>
+            <li><a href="../gallery/">Gallery</a></li>
+            <li><a href="../tt-races/">TT Races</a></li>
+            <li><a href="../news/">News</a></li>
+            <li><a href="../reviews/">Reviews</a></li>
+            <li><a href="../about/">About</a></li>
+            <li><a href="../contact/">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section section-alt">
+        <div class="container">
+          <h1>Contact Us</h1>
+          <p class="section-lead">
+            Ready to plan your stay or have a question? Reach out using the form or give us a call —
+            we'll be delighted to help.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container contact-grid">
+          <div class="contact-card">
+            <form class="contact-form" action="mailto:info@sulbyglenhotel.im" method="POST" enctype="text/plain">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required />
+
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required />
+
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+            <div class="contact-details">
+              <p><strong>Phone:</strong> +44 1624 123456</p>
+              <p><strong>Email:</strong> <a href="mailto:info@sulbyglenhotel.im">info@sulbyglenhotel.im</a></p>
+              <p><strong>Address:</strong> Sulby Glen Hotel, Main Road, Sulby, Isle of Man IM7 2HR</p>
+            </div>
+          </div>
+          <div class="contact-map">
+            <iframe
+              title="Sulby Glen Hotel Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8761.843925054356!2d-4.495!3d54.322!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4863d205066bea5b%3A0xd295a64c5f0913df!2sSulby%20Glen%20Hotel!5e0!3m2!1sen!2suk!4v1700000000000"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p>&copy; <span id="current-year"></span> Sulby Glen Hotel. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="../privacy/">Privacy Policy</a>
+          <a href="../accessibility/">Accessibility</a>
+          <a href="../contact/">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../script.js"></script>
+  </body>
+</html>
+
