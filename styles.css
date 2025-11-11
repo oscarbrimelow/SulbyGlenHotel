@@ -403,18 +403,6 @@ a {
   width: 100%;
   height: auto;
 }
-
-.section-media {
-  display: flex;
-  justify-content: center;
-}
-
-.section-media img,
-.section-media iframe {
-  width: 100%;
-  height: auto;
-}
-
 .cards-grid {
   display: grid;
   gap: 2rem;
