@@ -1,0 +1,94 @@
+Git commit/push troubleshooting (SulbyGlenHotel)
+
+Context
+-------
+In this repo, commits and pushes have succeeded, but terminal output can look broken or blank.
+This makes it feel like git is failing when it isn't.
+
+What happened previously
+------------------------
+1) Terminal output corruption / pager noise
+   - Some terminal sessions showed "less" help text or lots of control characters.
+   - This is typically caused by a pager (less) being invoked or terminal init scripts printing output.
+   - Result: git commands may run correctly, but you can't see the useful output.
+
+2) Stray untracked file with a "garbage" filename
+   - A weird untracked file appeared whose filename contained fragments of terminal script output.
+   - That file was not part of the website; it was safe to delete.
+   - Result: "git status" was confusing and the repo looked dirty for no obvious reason.
+
+3) Trae terminal startup script noise
+   - The terminal environment may run a script that prints a message about "Safe Rm alias".
+   - This is not a git error, but it can pollute/interrupt output.
+
+Quick sanity checks (fast)
+--------------------------
+Run these from the repo root:
+1) Check if you actually have changes to commit:
+   - git status --porcelain=v1 -b
+
+2) Check if HEAD moved after a commit:
+   - git rev-parse HEAD
+   - git log -1 --oneline
+
+3) Check whether your push is up to date:
+   - git push
+
+If these show clean/expected results, git is working even if the terminal output looks odd.
+
+If output looks broken (recommended commands)
+---------------------------------------------
+Use these to avoid pagers and reduce noisy output:
+1) Disable pager per command:
+   - git --no-pager status
+   - git --no-pager log -1 --oneline
+   - git --no-pager show -1 --name-only
+
+2) Force a safe pager:
+   - git -c core.pager=cat status
+   - git -c core.pager=cat show -1
+
+3) If a command is likely to page, prefer the --no-pager form above.
+
+If "git commit" says nothing happened
+-------------------------------------
+Common reasons:
+1) There are no changes staged or tracked changes present:
+   - git status --porcelain=v1 -b
+
+2) Only untracked files exist (commit -am will not include them):
+   - git add -A
+   - git commit -m "Your message"
+
+If you see a weird untracked file again
+---------------------------------------
+1) Confirm what it is:
+   - git status
+   - git ls-files --others --exclude-standard
+
+2) If it is clearly not a site file (random name, contains terminal/script text), delete it and re-check:
+   - After deletion: git status --porcelain=v1 -b
+
+Do NOT delete real site assets (images/, *.html, styles.css, script.js) unless you intend to remove them.
+
+Escalation checklist (when it still feels "stuck")
+--------------------------------------------------
+1) Verify you are in the repo root:
+   - Look for the .git folder and your site files (index.html, styles.css).
+
+2) Verify which branch you are on:
+   - git status -b
+
+3) Verify remote exists:
+   - git remote -v
+
+4) Verify you can reach the remote:
+   - git fetch
+
+5) If push fails with auth/permissions:
+   - The error message matters; copy it exactly.
+
+Notes
+-----
+- Moving the project folder is almost never necessary for git itself.
+- The “broken output” symptom is typically an environment/pager/startup-script issue, not a repo issue.

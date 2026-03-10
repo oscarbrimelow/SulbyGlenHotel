@@ -651,6 +651,14 @@ a {
   box-shadow: var(--shadow-card);
 }
 
+.contact-card .section-lead {
+  margin-bottom: 1.5rem;
+}
+
+.contact-card .hero-actions {
+  justify-content: flex-start;
+}
+
 .contact-form {
   display: grid;
   gap: 1rem;
