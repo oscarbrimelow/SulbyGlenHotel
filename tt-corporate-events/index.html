@@ -130,6 +130,18 @@
         display: none;
       }
 
+      .bespoke-success {
+        display: none;
+      }
+
+      .bespoke-success.is-visible {
+        display: block;
+      }
+
+      .bespoke-form.is-hidden {
+        display: none;
+      }
+
       @media (max-width: 860px) {
         .steve-date-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -186,7 +198,7 @@
           </p>
           <div class="hero-actions">
             <a href="#booking" class="btn btn-primary">Book a TT Day with Steve Parrish</a>
-            <a href="../contact/" class="btn btn-outline">Contact for Bespoke Packages</a>
+            <a href="../contact/" class="btn btn-outline" data-bespoke-open>Contact for Bespoke Packages</a>
           </div>
         </div>
       </section>
@@ -223,7 +235,7 @@
             </p>
           </div>
           <div class="section-media">
-            <img src="../images/TT%20package%20deal/parrish.jpg" alt="Steve Parrish during the Isle of Man TT" />
+            <img src="../images/TT%20package%20deal/SteveParrish.jpg" alt="Steve Parrish during the Isle of Man TT" />
           </div>
         </div>
         <div class="container steve-date-wrap">
@@ -295,6 +307,42 @@
               <p class="note" style="margin: 0;">
                 If you are not redirected, use this payment link:
                 <a href="https://pay.sumup.com/b2c/QFYOICAU" target="_blank" rel="noopener">Pay with SumUp</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="steve-modal" id="bespoke-modal" hidden>
+        <div class="steve-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bespoke-modal-title">
+          <div class="steve-modal-header">
+            <h3 id="bespoke-modal-title">Corporate hospitality enquiry</h3>
+            <button type="button" class="steve-modal-close" data-bespoke-close>Close</button>
+          </div>
+          <div class="steve-modal-body">
+            <form class="contact-form bespoke-form" id="bespoke-form" action="https://formspree.io/f/xkoqypgp" method="POST">
+              <input type="hidden" name="_subject" value="TT Corporate Hospitality Enquiry - Sulby Glen Hotel" />
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display: none;" />
+
+              <label for="bespoke-name">Full Name</label>
+              <input id="bespoke-name" name="full_name" type="text" autocomplete="name" required />
+
+              <label for="bespoke-phone">Phone Number</label>
+              <input id="bespoke-phone" name="phone_number" type="tel" autocomplete="tel" required />
+
+              <label for="bespoke-email">Email Address</label>
+              <input id="bespoke-email" name="email" type="email" autocomplete="email" required />
+
+              <label for="bespoke-message">Message</label>
+              <textarea id="bespoke-message" name="message" rows="5" required></textarea>
+
+              <button type="submit" class="btn btn-primary" id="bespoke-submit-btn">Send enquiry</button>
+            </form>
+
+            <div class="bespoke-success" id="bespoke-success" aria-live="polite">
+              <h3 style="margin-top: 0;">Message sent</h3>
+              <p class="section-lead" style="margin-bottom: 0.75rem;">
+                Thanks — we’ve received your enquiry and will get back to you shortly.
               </p>
             </div>
           </div>
@@ -468,6 +516,11 @@
         var successPanel = document.getElementById("steve-success");
         var sumupUrl = "https://pay.sumup.com/b2c/QFYOICAU";
         var formspreeEndpoint = "https://formspree.io/f/maqpvpkq";
+        var bespokeModal = document.getElementById("bespoke-modal");
+        var bespokeForm = document.getElementById("bespoke-form");
+        var bespokeSubmitBtn = document.getElementById("bespoke-submit-btn");
+        var bespokeSuccess = document.getElementById("bespoke-success");
+        var bespokeEndpoint = "https://formspree.io/f/xkoqypgp";
 
         function openModal(selectedDate) {
           dateInput.value = selectedDate;
@@ -487,6 +540,23 @@
           submitBtn.textContent = "Submit & Continue to Payment";
         }
 
+        function openBespokeModal() {
+          bespokeModal.hidden = false;
+          document.body.style.overflow = "hidden";
+          var first = document.getElementById("bespoke-name");
+          if (first) first.focus();
+        }
+
+        function closeBespokeModal() {
+          bespokeModal.hidden = true;
+          document.body.style.overflow = "";
+          bespokeForm.reset();
+          bespokeSuccess.classList.remove("is-visible");
+          bespokeForm.classList.remove("is-hidden");
+          bespokeSubmitBtn.disabled = false;
+          bespokeSubmitBtn.textContent = "Send enquiry";
+        }
+
         document.addEventListener("click", function (event) {
           var dateBtn = event.target.closest("[data-steve-date]");
           if (dateBtn) {
@@ -494,14 +564,26 @@
             return;
           }
 
+          var bespokeOpen = event.target.closest("[data-bespoke-open]");
+          if (bespokeOpen) {
+            event.preventDefault();
+            openBespokeModal();
+            return;
+          }
+
           if (event.target.matches("[data-steve-close]") || event.target === modal) {
             closeModal();
+          }
+
+          if (event.target.matches("[data-bespoke-close]") || event.target === bespokeModal) {
+            closeBespokeModal();
           }
         });
 
         document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape" && !modal.hidden) {
-            closeModal();
+          if (event.key === "Escape") {
+            if (!modal.hidden) closeModal();
+            if (!bespokeModal.hidden) closeBespokeModal();
           }
         });
 
@@ -534,6 +616,35 @@
             })
             .catch(function () {
               window.location.href = sumupUrl;
+            });
+        });
+
+        bespokeForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          bespokeSubmitBtn.disabled = true;
+          bespokeSubmitBtn.textContent = "Sending…";
+
+          var data = new FormData(bespokeForm);
+
+          fetch(bespokeEndpoint, {
+            method: "POST",
+            body: data,
+            headers: { Accept: "application/json" },
+          })
+            .then(function (response) {
+              if (!response.ok) throw new Error("Submission failed");
+
+              bespokeForm.classList.add("is-hidden");
+              bespokeSuccess.classList.add("is-visible");
+            })
+            .catch(function () {
+              try {
+                bespokeForm.submit();
+              } catch (e) {
+                bespokeSubmitBtn.disabled = false;
+                bespokeSubmitBtn.textContent = "Send enquiry";
+              }
             });
         });
       })();
