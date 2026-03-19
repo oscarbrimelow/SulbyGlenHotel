@@ -19,6 +19,10 @@
         margin-top: 1.5rem;
       }
 
+      .steve-date-wrap {
+        margin-top: 1.25rem;
+      }
+
       .steve-date-btn {
         width: 100%;
         justify-content: center;
@@ -187,6 +191,116 @@
         </div>
       </section>
 
+      <!-- Steve Parrish TT Days (booking + payment flow) -->
+      <section class="section section-alt" id="booking">
+        <div class="container section-grid">
+          <div class="section-text">
+            <h2>Spend Time with Steve Parrish During TT</h2>
+            <p class="section-lead">
+              During the TT, join Steve Parrish for an exclusive experience at Sulby Glen Hotel. Select a date below to reserve your spot.
+            </p>
+            <p>
+              Few names capture the spirit of road racing quite like Steve Parrish. With a career that spans professional racing and
+              broadcasting, Parrish brings firsthand insight, humour, and unforgettable stories from the golden era of motorsport.
+            </p>
+            <p>
+              His deep connection to the legendary Isle of Man TT makes every appearance something special—offering fans a rare chance to
+              experience the history, adrenaline, and passion of one of the world’s most iconic races through the eyes of someone who’s lived it.
+            </p>
+            <p>
+              To be part of this unique experience, simply select one of the available dates below to reserve your place. Each session offers
+              an intimate opportunity to spend time with Steve Parrish, hear his stories, and enjoy the atmosphere of the Isle of Man TT from a
+              truly exclusive setting.
+            </p>
+            <p>
+              Spaces are limited for each day, so we recommend booking early to secure your preferred date and avoid missing out on this
+              unforgettable TT hospitality experience.
+            </p>
+            <p class="note"><strong>Price:</strong> £175</p>
+            <p class="note">
+              We do not currently have a system in place to prevent overbooking. If we are unable to accommodate your selected date, we will
+              contact you and issue a full refund.
+            </p>
+          </div>
+          <div class="section-media">
+            <img src="../images/TT%20package%20deal/parrish.jpg" alt="Steve Parrish during the Isle of Man TT" />
+          </div>
+        </div>
+        <div class="container steve-date-wrap">
+          <div class="steve-date-grid" aria-label="Select a date to book">
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="30 May">30 May</button>
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="1 June">1 June</button>
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="3 June">3 June</button>
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="5 June">5 June</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Booking Modal (no new pages, keeps everything on this page) -->
+      <div class="steve-modal" id="steve-booking-modal" hidden>
+        <div class="steve-modal-panel" role="dialog" aria-modal="true" aria-labelledby="steve-modal-title">
+          <div class="steve-modal-header">
+            <h3 id="steve-modal-title">Reserve your TT day — £175</h3>
+            <button type="button" class="steve-modal-close" data-steve-close>Close</button>
+          </div>
+          <div class="steve-modal-body">
+            <!-- Form handling:
+                 - Uses Formspree (no backend needed) to collect the booking details.
+                 - On success, shows a confirmation message, then redirects to SumUp payment after a short delay.
+                 - SumUp payment pages do not reliably accept custom metadata; the selected date is captured in the form submission. -->
+            <form
+              class="contact-form steve-form"
+              id="steve-booking-form"
+              action="https://formspree.io/f/maqpvpkq"
+              method="POST"
+            >
+              <input type="hidden" name="_subject" value="TT Steve Parrish Day Booking - Sulby Glen Hotel" />
+              <input type="hidden" name="price" value="£175" />
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display: none;" />
+
+              <label for="steve-full-name">Full Name</label>
+              <input id="steve-full-name" name="full_name" type="text" autocomplete="name" required />
+
+              <label for="steve-email">Email Address</label>
+              <input id="steve-email" name="email" type="email" autocomplete="email" required />
+
+              <label for="steve-phone">Phone Number</label>
+              <input id="steve-phone" name="phone_number" type="tel" autocomplete="tel" required />
+
+              <label for="steve-guests">Number of Guests</label>
+              <input id="steve-guests" name="number_of_guests" type="number" min="1" step="1" required />
+
+              <label for="steve-guest-names">Names of Guests (optional)</label>
+              <textarea id="steve-guest-names" name="guest_names" rows="3"></textarea>
+
+              <label for="steve-date">Selected Date</label>
+              <input id="steve-date" name="selected_date" type="text" readonly />
+
+              <label for="steve-notes">Any Notes (optional)</label>
+              <textarea id="steve-notes" name="notes" rows="4"></textarea>
+
+              <button type="submit" class="btn btn-primary" id="steve-submit-btn">
+                Submit &amp; Continue to Payment
+              </button>
+              <p class="note" style="margin-top: 0.9rem;">
+                After submitting, you’ll be redirected to a secure SumUp payment page to confirm your booking.
+              </p>
+            </form>
+
+            <div class="steve-success" id="steve-success" aria-live="polite">
+              <h3 style="margin-top: 0;">Booking received</h3>
+              <p class="section-lead" style="margin-bottom: 0.75rem;">
+                Thanks — we’ve received your details. Redirecting you to payment in a few seconds.
+              </p>
+              <p class="note" style="margin: 0;">
+                If you are not redirected, use this payment link:
+                <a href="https://pay.sumup.com/b2c/QFYOICAU" target="_blank" rel="noopener">Pay with SumUp</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <section class="section section-alt">
         <div class="container section-grid">
           <div class="section-text">
@@ -328,86 +442,6 @@
         </div>
       </section>
 
-      <!-- Steve Parrish TT Days (booking + payment flow) -->
-      <section class="section section-alt" id="booking">
-        <div class="container">
-          <h2>Spend Time with Steve Parrish During TT</h2>
-          <p class="section-lead">
-            During the TT, join Steve Parrish for an exclusive experience at Sulby Glen Hotel. Select a date below to reserve your spot.
-          </p>
-
-          <div class="steve-date-grid" aria-label="Select a date to book">
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="30 May">30 May</button>
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="1 June">1 June</button>
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="3 June">3 June</button>
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="5 June">5 June</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Booking Modal (no new pages, keeps everything on this page) -->
-      <div class="steve-modal" id="steve-booking-modal" hidden>
-        <div class="steve-modal-panel" role="dialog" aria-modal="true" aria-labelledby="steve-modal-title">
-          <div class="steve-modal-header">
-            <h3 id="steve-modal-title">Reserve your TT day</h3>
-            <button type="button" class="steve-modal-close" data-steve-close>Close</button>
-          </div>
-          <div class="steve-modal-body">
-            <!-- Form handling:
-                 - Uses Formspree (no backend needed) to collect the booking details.
-                 - On success, shows a confirmation message, then redirects to SumUp payment after a short delay.
-                 - SumUp payment pages do not reliably accept custom metadata; the selected date is captured in the form submission. -->
-            <form
-              class="contact-form steve-form"
-              id="steve-booking-form"
-              action="https://formspree.io/f/maqpvpkq"
-              method="POST"
-            >
-              <input type="hidden" name="_subject" value="TT Steve Parrish Day Booking - Sulby Glen Hotel" />
-              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display: none;" />
-
-              <label for="steve-full-name">Full Name</label>
-              <input id="steve-full-name" name="full_name" type="text" autocomplete="name" required />
-
-              <label for="steve-email">Email Address</label>
-              <input id="steve-email" name="email" type="email" autocomplete="email" required />
-
-              <label for="steve-phone">Phone Number</label>
-              <input id="steve-phone" name="phone_number" type="tel" autocomplete="tel" required />
-
-              <label for="steve-guests">Number of Guests</label>
-              <input id="steve-guests" name="number_of_guests" type="number" min="1" step="1" required />
-
-              <label for="steve-guest-names">Names of Guests (optional)</label>
-              <textarea id="steve-guest-names" name="guest_names" rows="3"></textarea>
-
-              <label for="steve-date">Selected Date</label>
-              <input id="steve-date" name="selected_date" type="text" readonly />
-
-              <label for="steve-notes">Any Notes (optional)</label>
-              <textarea id="steve-notes" name="notes" rows="4"></textarea>
-
-              <button type="submit" class="btn btn-primary" id="steve-submit-btn">
-                Submit &amp; Continue to Payment
-              </button>
-              <p class="note" style="margin-top: 0.9rem;">
-                After submitting, you’ll be redirected to a secure SumUp payment page to confirm your booking.
-              </p>
-            </form>
-
-            <div class="steve-success" id="steve-success" aria-live="polite">
-              <h3 style="margin-top: 0;">Booking received</h3>
-              <p class="section-lead" style="margin-bottom: 0.75rem;">
-                Thanks — we’ve received your details. Redirecting you to payment in a few seconds.
-              </p>
-              <p class="note" style="margin: 0;">
-                If you are not redirected, use this payment link:
-                <a href="https://pay.sumup.com/b2c/QFYOICAU" target="_blank" rel="noopener">Pay with SumUp</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </main>
 
     <footer class="site-footer">
