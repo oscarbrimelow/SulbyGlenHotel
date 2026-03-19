@@ -10,6 +10,108 @@
     />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../styles.css" />
+    <style>
+      /* Steve Parrish TT days section + modal (page-local only) */
+      .steve-date-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .steve-date-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.9rem 1rem;
+        border-radius: 16px;
+        transition: transform 140ms ease, box-shadow 140ms ease;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      }
+
+      .steve-date-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+      }
+
+      .steve-date-btn:active {
+        transform: translateY(0);
+      }
+
+      .steve-modal[hidden] {
+        display: none;
+      }
+
+      .steve-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: grid;
+        place-items: center;
+        padding: 1.25rem;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(6px);
+      }
+
+      .steve-modal-panel {
+        width: min(760px, 100%);
+        background: rgba(15, 15, 20, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        overflow: hidden;
+      }
+
+      .steve-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.1rem 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .steve-modal-header h3 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .steve-modal-close {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: inherit;
+        border-radius: 12px;
+        padding: 0.45rem 0.7rem;
+        cursor: pointer;
+      }
+
+      .steve-modal-body {
+        padding: 1.25rem;
+      }
+
+      .steve-success {
+        display: none;
+      }
+
+      .steve-success.is-visible {
+        display: block;
+      }
+
+      .steve-form.is-hidden {
+        display: none;
+      }
+
+      @media (max-width: 860px) {
+        .steve-date-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .steve-date-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
@@ -200,30 +302,81 @@
         </div>
       </section>
 
+      <!-- Steve Parrish TT Days (booking + payment flow) -->
       <section class="section section-alt" id="booking">
-        <div class="container contact-grid">
-          <div class="contact-card">
-            <h2>Book Your Corporate Package</h2>
-            <p class="section-lead">
-              Secure your TT hospitality package today with a deposit via PayPal.
-            </p>
-            <div style="text-align: center; margin-top: 2rem;">
-              <!-- PayPal Button Placeholder -->
-              <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                <input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="hosted_button_id" value="PLACEHOLDER_ID">
-                <button type="submit" class="btn btn-primary" style="background-color: #0070ba; border-color: #0070ba; display: inline-flex; align-items: center; gap: 0.5rem;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337l.756-4.728h1.954l.524-3.279h-2.92l.928-5.802h7.323c2.72 0 4.672 1.352 4.093 4.972-.379 2.37-1.879 3.523-3.692 3.523h-1.2l-.536 3.336-.176 1.115h-1.78l.215-1.337h-2.113l-.337 2.114H7.076zm5.952-11.85l-.544 3.397h.88c1.376 0 2.228-.629 2.464-2.106.184-1.152-.392-1.291-1.376-1.291h-1.424z"/></svg>
-                  Pay with PayPal
-                </button>
-              </form>
-              <p class="note" style="margin-top: 1rem;">
-                Please contact us to confirm availability before booking.
+        <div class="container">
+          <h2>Spend Time with Steve Parrish During TT</h2>
+          <p class="section-lead">
+            During the TT, join Steve Parrish for an exclusive experience at Sulby Glen Hotel. Select a date below to reserve your spot.
+          </p>
+
+          <div class="steve-date-grid" aria-label="Select a date to book">
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="30 May">30 May</button>
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="1 June">1 June</button>
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="3 June">3 June</button>
+            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="5 June">5 June</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Booking Modal (no new pages, keeps everything on this page) -->
+      <div class="steve-modal" id="steve-booking-modal" hidden>
+        <div class="steve-modal-panel" role="dialog" aria-modal="true" aria-labelledby="steve-modal-title">
+          <div class="steve-modal-header">
+            <h3 id="steve-modal-title">Reserve your TT day</h3>
+            <button type="button" class="steve-modal-close" data-steve-close>Close</button>
+          </div>
+          <div class="steve-modal-body">
+            <!-- Form handling:
+                 - Uses FormSubmit (no backend needed) to email the booking details.
+                 - On success, shows a confirmation message, then redirects to SumUp payment.
+                 - SumUp payment pages do not reliably accept custom metadata; the selected date is captured in the form email. -->
+            <form class="contact-form steve-form" id="steve-booking-form">
+              <input type="hidden" name="_subject" value="TT Steve Parrish Day Booking - Sulby Glen Hotel" />
+              <input type="hidden" name="_captcha" value="false" />
+
+              <label for="steve-full-name">Full Name</label>
+              <input id="steve-full-name" name="full_name" type="text" autocomplete="name" required />
+
+              <label for="steve-email">Email Address</label>
+              <input id="steve-email" name="email_address" type="email" autocomplete="email" required />
+
+              <label for="steve-phone">Phone Number</label>
+              <input id="steve-phone" name="phone_number" type="tel" autocomplete="tel" required />
+
+              <label for="steve-guests">Number of Guests</label>
+              <input id="steve-guests" name="number_of_guests" type="number" min="1" step="1" required />
+
+              <label for="steve-guest-names">Names of Guests (optional)</label>
+              <textarea id="steve-guest-names" name="guest_names" rows="3"></textarea>
+
+              <label for="steve-date">Selected Date</label>
+              <input id="steve-date" name="selected_date" type="text" readonly />
+
+              <label for="steve-notes">Any Notes (optional)</label>
+              <textarea id="steve-notes" name="notes" rows="4"></textarea>
+
+              <button type="submit" class="btn btn-primary" id="steve-submit-btn">
+                Submit &amp; Continue to Payment
+              </button>
+              <p class="note" style="margin-top: 0.9rem;">
+                After submitting, you’ll be redirected to a secure SumUp payment page to confirm your booking.
+              </p>
+            </form>
+
+            <div class="steve-success" id="steve-success" aria-live="polite">
+              <h3 style="margin-top: 0;">Booking received</h3>
+              <p class="section-lead" style="margin-bottom: 0.75rem;">
+                Thanks — we’ve received your details. Redirecting you to payment now.
+              </p>
+              <p class="note" style="margin: 0;">
+                If you are not redirected, use this payment link:
+                <a href="https://pay.sumup.com/b2c/QFYOICAU" target="_blank" rel="noopener">Pay with SumUp</a>
               </p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <section class="section" id="enquire">
         <div class="container contact-grid">
@@ -297,6 +450,115 @@
       </div>
     </footer>
 
+    <script>
+      // Steve Parrish TT days booking + SumUp payment redirect (page-local only)
+      (function () {
+        var modal = document.getElementById("steve-booking-modal");
+        var form = document.getElementById("steve-booking-form");
+        var dateInput = document.getElementById("steve-date");
+        var submitBtn = document.getElementById("steve-submit-btn");
+        var successPanel = document.getElementById("steve-success");
+        var sumupUrl = "https://pay.sumup.com/b2c/QFYOICAU";
+        var ajaxEndpoint = "https://formsubmit.co/ajax/info@sulbyglenhotel.com";
+        var fallbackEndpoint = "https://formsubmit.co/info@sulbyglenhotel.com";
+
+        function openModal(selectedDate) {
+          dateInput.value = selectedDate;
+          modal.hidden = false;
+          document.body.style.overflow = "hidden";
+          var first = document.getElementById("steve-full-name");
+          if (first) first.focus();
+        }
+
+        function closeModal() {
+          modal.hidden = true;
+          document.body.style.overflow = "";
+          form.reset();
+          form.removeAttribute("action");
+          form.removeAttribute("method");
+          form.removeAttribute("target");
+          Array.prototype.slice
+            .call(form.querySelectorAll('input[name="_next"]'))
+            .forEach(function (el) {
+              el.remove();
+            });
+          successPanel.classList.remove("is-visible");
+          form.classList.remove("is-hidden");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit & Continue to Payment";
+        }
+
+        document.addEventListener("click", function (event) {
+          var dateBtn = event.target.closest("[data-steve-date]");
+          if (dateBtn) {
+            openModal(dateBtn.getAttribute("data-steve-date"));
+            return;
+          }
+
+          if (event.target.matches("[data-steve-close]") || event.target === modal) {
+            closeModal();
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !modal.hidden) {
+            closeModal();
+          }
+        });
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          if (!dateInput.value) {
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Submitting…";
+
+          var data = new FormData(form);
+
+          fetch(ajaxEndpoint, {
+            method: "POST",
+            body: data,
+            headers: { Accept: "application/json" },
+          })
+            .then(function (response) {
+              if (!response.ok) throw new Error("Submission failed");
+
+              form.classList.add("is-hidden");
+              successPanel.classList.add("is-visible");
+
+              setTimeout(function () {
+                window.location.href = sumupUrl;
+              }, 900);
+            })
+            .catch(function () {
+              try {
+                form.setAttribute("action", fallbackEndpoint);
+                form.setAttribute("method", "POST");
+                form.setAttribute("target", "_self");
+
+                Array.prototype.slice
+                  .call(form.querySelectorAll('input[name="_next"]'))
+                  .forEach(function (el) {
+                    el.remove();
+                  });
+
+                var next = document.createElement("input");
+                next.type = "hidden";
+                next.name = "_next";
+                next.value = sumupUrl;
+                form.appendChild(next);
+
+                form.submit();
+              } catch (e) {
+                window.location.href = sumupUrl;
+              }
+            });
+        });
+      })();
+    </script>
     <script src="../script.js"></script>
   </body>
 </html>
