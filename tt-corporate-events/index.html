@@ -26,11 +26,15 @@
         border-radius: 16px;
         transition: transform 140ms ease, box-shadow 140ms ease;
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+        background: #ffffff;
+        color: #111111;
+        border-color: rgba(0, 0, 0, 0.12);
       }
 
       .steve-date-btn:hover {
         transform: translateY(-1px);
         box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+        background: #f6f6f6;
       }
 
       .steve-date-btn:active {
@@ -54,8 +58,9 @@
 
       .steve-modal-panel {
         width: min(760px, 100%);
-        background: rgba(15, 15, 20, 0.92);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: #ffffff;
+        color: #111111;
+        border: 1px solid rgba(0, 0, 0, 0.12);
         border-radius: 18px;
         box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
         overflow: hidden;
@@ -67,7 +72,7 @@
         justify-content: space-between;
         gap: 1rem;
         padding: 1.1rem 1.25rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       }
 
       .steve-modal-header h3 {
@@ -77,7 +82,7 @@
 
       .steve-modal-close {
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(0, 0, 0, 0.18);
         color: inherit;
         border-radius: 12px;
         padding: 0.45rem 0.7rem;
@@ -86,6 +91,27 @@
 
       .steve-modal-body {
         padding: 1.25rem;
+      }
+
+      .steve-modal .contact-form label {
+        color: #111111;
+      }
+
+      .steve-modal .contact-form input,
+      .steve-modal .contact-form textarea,
+      .steve-modal .contact-form select {
+        background: #ffffff;
+        color: #111111;
+        border-color: rgba(0, 0, 0, 0.18);
+      }
+
+      .steve-modal .note {
+        color: rgba(17, 17, 17, 0.78);
+      }
+
+      .steve-modal .note a {
+        color: inherit;
+        text-decoration: underline;
       }
 
       .steve-success {
@@ -155,7 +181,7 @@
             Isle of Man TT course, with a private hospitality base at the Sulby Glen Hotel.
           </p>
           <div class="hero-actions">
-            <a href="#enquire" class="btn btn-primary">Enquire Now for TT Corporate Packages</a>
+            <a href="#booking" class="btn btn-primary">Book a TT Day with Steve Parrish</a>
             <a href="../contact/" class="btn btn-outline">Contact for Bespoke Packages</a>
           </div>
         </div>
@@ -328,18 +354,23 @@
           </div>
           <div class="steve-modal-body">
             <!-- Form handling:
-                 - Uses FormSubmit (no backend needed) to email the booking details.
-                 - On success, shows a confirmation message, then redirects to SumUp payment.
-                 - SumUp payment pages do not reliably accept custom metadata; the selected date is captured in the form email. -->
-            <form class="contact-form steve-form" id="steve-booking-form">
+                 - Uses Formspree (no backend needed) to collect the booking details.
+                 - On success, shows a confirmation message, then redirects to SumUp payment after a short delay.
+                 - SumUp payment pages do not reliably accept custom metadata; the selected date is captured in the form submission. -->
+            <form
+              class="contact-form steve-form"
+              id="steve-booking-form"
+              action="https://formspree.io/f/maqpvpkq"
+              method="POST"
+            >
               <input type="hidden" name="_subject" value="TT Steve Parrish Day Booking - Sulby Glen Hotel" />
-              <input type="hidden" name="_captcha" value="false" />
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display: none;" />
 
               <label for="steve-full-name">Full Name</label>
               <input id="steve-full-name" name="full_name" type="text" autocomplete="name" required />
 
               <label for="steve-email">Email Address</label>
-              <input id="steve-email" name="email_address" type="email" autocomplete="email" required />
+              <input id="steve-email" name="email" type="email" autocomplete="email" required />
 
               <label for="steve-phone">Phone Number</label>
               <input id="steve-phone" name="phone_number" type="tel" autocomplete="tel" required />
@@ -367,7 +398,7 @@
             <div class="steve-success" id="steve-success" aria-live="polite">
               <h3 style="margin-top: 0;">Booking received</h3>
               <p class="section-lead" style="margin-bottom: 0.75rem;">
-                Thanks — we’ve received your details. Redirecting you to payment now.
+                Thanks — we’ve received your details. Redirecting you to payment in a few seconds.
               </p>
               <p class="note" style="margin: 0;">
                 If you are not redirected, use this payment link:
@@ -377,63 +408,6 @@
           </div>
         </div>
       </div>
-
-      <section class="section" id="enquire">
-        <div class="container contact-grid">
-          <div class="contact-card">
-            <h2>Enquire Now for TT Corporate Packages</h2>
-            <p class="section-lead">
-              Share a few details about your organisation and event plans, and we will get back in
-              touch to discuss bespoke TT hospitality options at the Sulby Glen Hotel.
-            </p>
-            <form
-              class="contact-form"
-              action="mailto:info@sulbyglenhotel.com?subject=TT%20Corporate%20Hospitality%20Enquiry"
-              method="POST"
-              enctype="text/plain"
-            >
-              <label for="organisation-name">Organisation name</label>
-              <input id="organisation-name" name="organisation" type="text" required />
-
-              <label for="contact-name">Your name</label>
-              <input id="contact-name" name="name" type="text" required />
-
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" required />
-
-              <label for="phone">Phone number</label>
-              <input id="phone" name="phone" type="tel" />
-
-              <label for="group-size">Approximate group size (up to 70)</label>
-              <input id="group-size" name="group-size" type="number" min="1" max="70" />
-
-              <label for="dates">Preferred TT dates or race days</label>
-              <input id="dates" name="preferred-dates" type="text" />
-
-              <label for="event-type">Type of event</label>
-              <select id="event-type" name="event-type">
-                <option value="">Please select</option>
-                <option value="team-hospitality">Team hospitality</option>
-                <option value="sponsor-activation">Sponsor activation / client hosting</option>
-                <option value="product-launch">Product launch</option>
-                <option value="other">Other</option>
-              </select>
-
-              <label for="requirements">Additional details or requirements</label>
-              <textarea id="requirements" name="requirements" rows="4"></textarea>
-
-              <button type="submit" class="btn btn-primary">Send TT Corporate Enquiry</button>
-            </form>
-            <div class="contact-details">
-              <p>
-                Prefer to talk? Call us on
-                <a href="tel:+441624897240">897240</a> or use our main
-                <a href="../contact/">contact page</a>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">
@@ -459,8 +433,7 @@
         var submitBtn = document.getElementById("steve-submit-btn");
         var successPanel = document.getElementById("steve-success");
         var sumupUrl = "https://pay.sumup.com/b2c/QFYOICAU";
-        var ajaxEndpoint = "https://formsubmit.co/ajax/info@sulbyglenhotel.com";
-        var fallbackEndpoint = "https://formsubmit.co/info@sulbyglenhotel.com";
+        var formspreeEndpoint = "https://formspree.io/f/maqpvpkq";
 
         function openModal(selectedDate) {
           dateInput.value = selectedDate;
@@ -474,14 +447,6 @@
           modal.hidden = true;
           document.body.style.overflow = "";
           form.reset();
-          form.removeAttribute("action");
-          form.removeAttribute("method");
-          form.removeAttribute("target");
-          Array.prototype.slice
-            .call(form.querySelectorAll('input[name="_next"]'))
-            .forEach(function (el) {
-              el.remove();
-            });
           successPanel.classList.remove("is-visible");
           form.classList.remove("is-hidden");
           submitBtn.disabled = false;
@@ -518,7 +483,7 @@
 
           var data = new FormData(form);
 
-          fetch(ajaxEndpoint, {
+          fetch(formspreeEndpoint, {
             method: "POST",
             body: data,
             headers: { Accept: "application/json" },
@@ -531,30 +496,10 @@
 
               setTimeout(function () {
                 window.location.href = sumupUrl;
-              }, 900);
+              }, 7000);
             })
             .catch(function () {
-              try {
-                form.setAttribute("action", fallbackEndpoint);
-                form.setAttribute("method", "POST");
-                form.setAttribute("target", "_self");
-
-                Array.prototype.slice
-                  .call(form.querySelectorAll('input[name="_next"]'))
-                  .forEach(function (el) {
-                    el.remove();
-                  });
-
-                var next = document.createElement("input");
-                next.type = "hidden";
-                next.name = "_next";
-                next.value = sumupUrl;
-                form.appendChild(next);
-
-                form.submit();
-              } catch (e) {
-                window.location.href = sumupUrl;
-              }
+              window.location.href = sumupUrl;
             });
         });
       })();
