@@ -45,6 +45,13 @@
         transform: translateY(0);
       }
 
+      .steve-date-btn:disabled {
+        opacity: 0.55;
+        box-shadow: none;
+        transform: none;
+        cursor: not-allowed;
+      }
+
       .steve-modal[hidden] {
         display: none;
       }
@@ -221,26 +228,33 @@
           <div class="section-text">
             <h2>Spend Time with Steve Parrish During TT</h2>
             <p class="section-lead">
-              During the TT, join Steve Parrish for an exclusive experience at Sulby Glen Hotel. Select a date below to reserve your spot.
+              Soak up the action, excitement, and atmosphere of the Isle of Man TT Races with premium hospitality, incredible views, and an
+              unforgettable day at one of the most legendary locations on the course.
             </p>
             <p>
-              Few names capture the spirit of road racing quite like Steve Parrish. With a career that spans professional racing and
-              broadcasting, Parrish brings firsthand insight, humour, and unforgettable stories from the golden era of motorsport.
+              Looking to impress customers, guests, or clients? Our hospitality days offer a standout corporate experience right in the heart of
+              the TT action.
             </p>
             <p>
-              His deep connection to the legendary Isle of Man TT makes every appearance something special—offering fans a rare chance to
-              experience the history, adrenaline, and passion of one of the world’s most iconic races through the eyes of someone who’s lived it.
+              The Sulby Glen Hotel is the only place on the island where you can view some of the actual TT trophies. An iconic part of the Isle
+              of Man TT, the Sulby Glen Hotel is also home to 8-time TT winner Dan Sayle.
             </p>
             <p>
-              To be part of this unique experience, simply select one of the available dates below to reserve your place. Each session offers
-              an intimate opportunity to spend time with Steve Parrish, hear his stories, and enjoy the atmosphere of the Isle of Man TT from a
-              truly exclusive setting.
+              Your hospitality ticket includes:
             </p>
+            <ul>
+              <li>A welcome breakfast bap</li>
+              <li>Hot buffet luncheon</li>
+              <li>Unlimited tea and coffee</li>
+              <li>Reserved viewing area</li>
+            </ul>
             <p>
-              Spaces are limited for each day, so we recommend booking early to secure your preferred date and avoid missing out on this
-              unforgettable TT hospitality experience.
+              Guests can also enjoy a warm and welcoming marquee, full live coverage of the races with commentary, and live chats with
+              world-famous motorcycle rider Steve Parrish.
             </p>
-            <p class="note"><strong>Price:</strong> £175 per person</p>
+            <p class="note"><strong>Event time (both dates):</strong> 9:00 AM – 6:00 PM</p>
+            <p class="note"><strong>Standard ticket:</strong> £70 per person</p>
+            <p class="note"><strong>Group booking:</strong> 5 people for £260</p>
           </div>
           <div class="section-media">
             <img src="../images/TT%20package%20deal/SteveParrish.jpg" alt="Steve Parrish during the Isle of Man TT" />
@@ -248,83 +262,17 @@
         </div>
         <div class="container steve-date-wrap">
           <div class="steve-date-grid" aria-label="Select a date to book">
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="30 May">30 May</button>
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="1 June">1 June</button>
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="3 June">3 June</button>
-            <button type="button" class="btn btn-outline steve-date-btn" data-steve-date="5 June">5 June</button>
+            <a
+              class="btn btn-outline steve-date-btn"
+              href="https://www.tickettailor.com/events/sulbyglenhotel/2208700"
+              target="_blank"
+              rel="noopener"
+              >Book 3 June</a
+            >
+            <button type="button" class="btn btn-outline steve-date-btn" disabled>5 June — Booking link coming soon</button>
           </div>
         </div>
       </section>
-
-      <!-- Booking Modal (no new pages, keeps everything on this page) -->
-      <div class="steve-modal" id="steve-booking-modal" hidden>
-        <div class="steve-modal-panel" role="dialog" aria-modal="true" aria-labelledby="steve-modal-title">
-          <div class="steve-modal-header">
-            <h3 id="steve-modal-title">Reserve your TT day — £175 per person</h3>
-            <button type="button" class="steve-modal-close" data-steve-close>Close</button>
-          </div>
-          <div class="steve-modal-body">
-            <!-- Form handling:
-                 - Uses Formspree (no backend needed) to collect the booking details.
-                 - On success, shows a confirmation message, then redirects to SumUp payment after a short delay.
-                 - SumUp payment pages do not reliably accept custom metadata; the selected date is captured in the form submission. -->
-            <form
-              class="contact-form steve-form"
-              id="steve-booking-form"
-              action="https://formspree.io/f/maqpvpkq"
-              method="POST"
-            >
-              <input type="hidden" name="_subject" value="TT Steve Parrish Day Booking - Sulby Glen Hotel" />
-              <input type="hidden" name="price" value="£175 per person" />
-              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display: none;" />
-
-              <label for="steve-full-name">Full Name</label>
-              <input id="steve-full-name" name="full_name" type="text" autocomplete="name" required />
-
-              <label for="steve-email">Email Address</label>
-              <input id="steve-email" name="email" type="email" autocomplete="email" required />
-
-              <label for="steve-phone">Phone Number</label>
-              <input id="steve-phone" name="phone_number" type="tel" autocomplete="tel" required />
-
-              <label for="steve-guests">Number of Guests</label>
-              <input id="steve-guests" name="number_of_guests" type="number" min="1" step="1" required />
-
-              <label for="steve-guest-names">Names of Guests (optional)</label>
-              <textarea id="steve-guest-names" name="guest_names" rows="3"></textarea>
-
-              <label for="steve-date">Selected Date</label>
-              <input id="steve-date" name="selected_date" type="text" readonly />
-
-              <label for="steve-notes">Any Notes (optional)</label>
-              <textarea id="steve-notes" name="notes" rows="4"></textarea>
-
-              <button type="submit" class="btn btn-primary" id="steve-submit-btn">
-                Submit &amp; Continue to Payment
-              </button>
-              <p class="note" style="margin-top: 0.9rem;">
-                After submitting, you’ll be redirected to a secure SumUp payment page to confirm your booking.
-              </p>
-              <p class="note" style="margin-top: 0.6rem;">
-                TT 2026 Hospitality is £175 per person. Please calculate according to the amount of guests and enter above. For other payment
-                options, contact us at
-                <a href="mailto:info@sulbyglenhotel.com">info@sulbyglenhotel.com</a>.
-              </p>
-            </form>
-
-            <div class="steve-success" id="steve-success" aria-live="polite">
-              <h3 style="margin-top: 0;">Booking received</h3>
-              <p class="section-lead" style="margin-bottom: 0.75rem;">
-                Thanks — we’ve received your details. Redirecting you to payment in a few seconds.
-              </p>
-              <p class="note" style="margin: 0;">
-                If you are not redirected, use this payment link:
-                <a href="https://pay.sumup.com/b2c/QOQS1S1R" target="_blank" rel="noopener">Pay with SumUp</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="steve-modal" id="bespoke-modal" hidden>
         <div class="steve-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bespoke-modal-title">
@@ -520,38 +468,13 @@
     </footer>
 
     <script>
-      // Steve Parrish TT days booking + SumUp payment redirect (page-local only)
+      // TicketTailor links + Formspree bespoke enquiry modal (page-local only)
       (function () {
-        var modal = document.getElementById("steve-booking-modal");
-        var form = document.getElementById("steve-booking-form");
-        var dateInput = document.getElementById("steve-date");
-        var submitBtn = document.getElementById("steve-submit-btn");
-        var successPanel = document.getElementById("steve-success");
-        var sumupUrl = "https://pay.sumup.com/b2c/QOQS1S1R";
-        var formspreeEndpoint = "https://formspree.io/f/maqpvpkq";
         var bespokeModal = document.getElementById("bespoke-modal");
         var bespokeForm = document.getElementById("bespoke-form");
         var bespokeSubmitBtn = document.getElementById("bespoke-submit-btn");
         var bespokeSuccess = document.getElementById("bespoke-success");
         var bespokeEndpoint = "https://formspree.io/f/xkoqypgp";
-
-        function openModal(selectedDate) {
-          dateInput.value = selectedDate;
-          modal.hidden = false;
-          document.body.style.overflow = "hidden";
-          var first = document.getElementById("steve-full-name");
-          if (first) first.focus();
-        }
-
-        function closeModal() {
-          modal.hidden = true;
-          document.body.style.overflow = "";
-          form.reset();
-          successPanel.classList.remove("is-visible");
-          form.classList.remove("is-hidden");
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Submit & Continue to Payment";
-        }
 
         function openBespokeModal() {
           bespokeModal.hidden = false;
@@ -571,21 +494,11 @@
         }
 
         document.addEventListener("click", function (event) {
-          var dateBtn = event.target.closest("[data-steve-date]");
-          if (dateBtn) {
-            openModal(dateBtn.getAttribute("data-steve-date"));
-            return;
-          }
-
           var bespokeOpen = event.target.closest("[data-bespoke-open]");
           if (bespokeOpen) {
             event.preventDefault();
             openBespokeModal();
             return;
-          }
-
-          if (event.target.matches("[data-steve-close]") || event.target === modal) {
-            closeModal();
           }
 
           if (event.target.matches("[data-bespoke-close]") || event.target === bespokeModal) {
@@ -595,41 +508,8 @@
 
         document.addEventListener("keydown", function (event) {
           if (event.key === "Escape") {
-            if (!modal.hidden) closeModal();
             if (!bespokeModal.hidden) closeBespokeModal();
           }
-        });
-
-        form.addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          if (!dateInput.value) {
-            return;
-          }
-
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Submitting…";
-
-          var data = new FormData(form);
-
-          fetch(formspreeEndpoint, {
-            method: "POST",
-            body: data,
-            headers: { Accept: "application/json" },
-          })
-            .then(function (response) {
-              if (!response.ok) throw new Error("Submission failed");
-
-              form.classList.add("is-hidden");
-              successPanel.classList.add("is-visible");
-
-              setTimeout(function () {
-                window.location.href = sumupUrl;
-              }, 7000);
-            })
-            .catch(function () {
-              window.location.href = sumupUrl;
-            });
         });
 
         bespokeForm.addEventListener("submit", function (event) {
